@@ -1,0 +1,14 @@
+D:\VisualStudio\WPF App\WpfApplication2\WpfApplication2\bin\Release\WpfApplication2.exe.config
+D:\VisualStudio\WPF App\WpfApplication2\WpfApplication2\bin\Release\WpfApplication2.exe
+D:\VisualStudio\WPF App\WpfApplication2\WpfApplication2\bin\Release\WpfApplication2.pdb
+D:\VisualStudio\WPF App\WpfApplication2\WpfApplication2\obj\Release\MainWindow.g.cs
+D:\VisualStudio\WPF App\WpfApplication2\WpfApplication2\obj\Release\App.g.cs
+D:\VisualStudio\WPF App\WpfApplication2\WpfApplication2\obj\Release\WpfApplication2_MarkupCompile.cache
+D:\VisualStudio\WPF App\WpfApplication2\WpfApplication2\obj\Release\WpfApplication2_MarkupCompile.lref
+D:\VisualStudio\WPF App\WpfApplication2\WpfApplication2\obj\Release\App.baml
+D:\VisualStudio\WPF App\WpfApplication2\WpfApplication2\obj\Release\MainWindow.baml
+D:\VisualStudio\WPF App\WpfApplication2\WpfApplication2\obj\Release\WpfApplication2.g.resources
+D:\VisualStudio\WPF App\WpfApplication2\WpfApplication2\obj\Release\WpfApplication2.Properties.Resources.resources
+D:\VisualStudio\WPF App\WpfApplication2\WpfApplication2\obj\Release\WpfApplication2.csproj.GenerateResource.Cache
+D:\VisualStudio\WPF App\WpfApplication2\WpfApplication2\obj\Release\WpfApplication2.exe
+D:\VisualStudio\WPF App\WpfApplication2\WpfApplication2\obj\Release\WpfApplication2.pdb

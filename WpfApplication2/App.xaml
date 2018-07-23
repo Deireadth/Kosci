@@ -1,0 +1,11 @@
+﻿<Application x:Class="WpfApplication2.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:WpfApplication2"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+
+        <BitmapImage x:Key="Kostka1" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="D:\VisualStudio\WPF App\WpfApplication2\WpfApplication2\Kostka\1.jpg"/>
+
+    </Application.Resources>
+</Application>
