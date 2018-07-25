@@ -307,7 +307,7 @@ namespace WpfApplication2 {
         
         #line 69 "..\..\MainWindow.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
-        internal System.Windows.Controls.Grid Test;
+        internal System.Windows.Controls.Grid resultTable;
         
         #line default
         #line hidden
@@ -574,7 +574,7 @@ namespace WpfApplication2 {
             #line hidden
             return;
             case 34:
-            this.Test = ((System.Windows.Controls.Grid)(target));
+            this.resultTable = ((System.Windows.Controls.Grid)(target));
             return;
             }
             this._contentLoaded = true;

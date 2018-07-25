@@ -127,16 +127,16 @@ namespace WpfApplication2
 
             //Grid MyNewGrid = new Grid();
             for (int i = 0; i < numCols; ++i)
-                Test.ColumnDefinitions.Add(new ColumnDefinition());
+                resultTable.ColumnDefinitions.Add(new ColumnDefinition());
             for (int i = 0; i < 18; ++i)
-                Test.RowDefinitions.Add(new RowDefinition());
+                resultTable.RowDefinitions.Add(new RowDefinition());
 
-            foreach (var g in Test.RowDefinitions)
+            foreach (var g in resultTable.RowDefinitions)
             {
                 g.Height = new GridLength(1, GridUnitType.Auto);
             }
 
-            foreach (var g in Test.ColumnDefinitions)
+            foreach (var g in resultTable.ColumnDefinitions)
             {
                 g.Width = new GridLength(1,GridUnitType.Star);
                 g.MinWidth = 120 ;
@@ -148,8 +148,8 @@ namespace WpfApplication2
             {
                 for (int i = 0; i < 18; ++i)
                 {
-                    int idx = Test.Children.Add(new System.Windows.Controls.Label());
-                    System.Windows.Controls.Label x = Test.Children[idx] as System.Windows.Controls.Label;
+                    int idx = resultTable.Children.Add(new System.Windows.Controls.Label());
+                    System.Windows.Controls.Label x = resultTable.Children[idx] as System.Windows.Controls.Label;
                     x.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Center;
                     
                     if (i == 0)
@@ -199,8 +199,8 @@ namespace WpfApplication2
                 if (child == sender) break;
 
             }
-            System.Windows.Controls.Label labelind = (Test.RowDefinitions.ElementAt(index).FindName("P"+ActivePlayer.PersonId+"B"+index) as System.Windows.Controls.Label);
-            if (labelind.Content != "") return;
+            System.Windows.Controls.Label labelind = (resultTable.RowDefinitions.ElementAt(index).FindName("P"+ActivePlayer.PersonId+"B"+index) as System.Windows.Controls.Label);
+            if ((string)labelind.Content != "") return;
             labelind.Content = liczpunkty.figury(imgKostka1.ToolTip.ToString()[0], imgKostka2.ToolTip.ToString()[0], imgKostka3.ToolTip.ToString()[0], imgKostka4.ToolTip.ToString()[0], imgKostka5.ToolTip.ToString()[0], btn);
             ActivePlayer.DrawsLeft = 3;
             //GeneralTransform generalTransform1 = TransformToVisual(btn);
@@ -237,7 +237,7 @@ namespace WpfApplication2
                 if (child == sender) break;
 
             }
-            System.Windows.Controls.Label labelind = (Test.RowDefinitions.ElementAt(index).FindName("P" + ActivePlayer.PersonId + "B" + index) as System.Windows.Controls.Label);
+            System.Windows.Controls.Label labelind = (resultTable.RowDefinitions.ElementAt(index).FindName("P" + ActivePlayer.PersonId + "B" + index) as System.Windows.Controls.Label);
             if (labelind.Content != "") return;
             labelind.Content = liczpunkty.szkola(imgKostka1.ToolTip.ToString(), imgKostka2.ToolTip.ToString(), imgKostka3.ToolTip.ToString(), imgKostka4.ToolTip.ToString(), imgKostka5.ToolTip.ToString(), btn);
             ActivePlayer.DrawsLeft = 3;

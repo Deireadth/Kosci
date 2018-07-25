@@ -28,3 +28,6 @@ D:\VisualStudioprojects\WPF App\WpfApplication2\WpfApplication2\obj\Debug\WpfApp
 D:\VisualStudioprojects\WPF App\WpfApplication2\WpfApplication2\obj\Debug\WpfApplication2.Properties.Resources.resources
 D:\VisualStudioprojects\WPF App\WpfApplication2\WpfApplication2\obj\Debug\WpfApplication2.csproj.GenerateResource.Cache
 D:\VisualStudio\WPF App\WpfApplication2\WpfApplication2\obj\Debug\WpfApplication2.csprojResolveAssemblyReference.cache
+D:\GitHub\Kosci\Kosci\WpfApplication2\bin\Debug\WpfApplication2.exe.config
+D:\GitHub\Kosci\Kosci\WpfApplication2\obj\Debug\WpfApplication2.exe
+D:\GitHub\Kosci\Kosci\WpfApplication2\obj\Debug\WpfApplication2.pdb
