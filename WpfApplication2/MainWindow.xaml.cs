@@ -15,7 +15,6 @@ using System.Windows.Shapes;
 using System.Security.Cryptography;
 using System.Windows.Forms;
 using System.Drawing;
-using System.Windows.Media;
 namespace WpfApplication2
 {
     /// <summary>
@@ -51,7 +50,7 @@ namespace WpfApplication2
                 {
                     DiceSelected = true;
                     imgKostka1.Source = Kostka.Main();
-                    imgKostka1.ToolTip = imgKostka1.Source.ToString().Substring(imgKostka1.Source.ToString().Length-5, 1);
+                    imgKostka1.ToolTip = imgKostka1.Source.ToString().Substring(imgKostka1.Source.ToString().Length - 5, 1);
                     cbKostka1.IsChecked = false;
                 }
                 if (cbKostka2.IsChecked == true)
@@ -125,26 +124,26 @@ namespace WpfApplication2
             string input = "";
             Int32 numCols = Int32.Parse(Inputbox.ShowInputDialog(ref input, "Podaj liczbę graczy", 500,70));
 
-            //Grid MyNewGrid = new Grid();
-            for (int i = 0; i < numCols; ++i)
+            //create column for each player
+            for (int i = 0; i < numCols; ++i) 
                 resultTable.ColumnDefinitions.Add(new ColumnDefinition());
-            for (int i = 0; i < 18; ++i)
+            //create row for each possible category
+            for (int i = 0; i < 18; ++i)    
                 resultTable.RowDefinitions.Add(new RowDefinition());
-
-            foreach (var g in resultTable.RowDefinitions)
+            //set height of each created row
+            foreach (var g in resultTable.RowDefinitions) 
             {
                 g.Height = new GridLength(1, GridUnitType.Auto);
             }
-
-            foreach (var g in resultTable.ColumnDefinitions)
+            // set width of each created column
+            foreach (var g in resultTable.ColumnDefinitions) 
             {
                 g.Width = new GridLength(1,GridUnitType.Star);
                 g.MinWidth = 120 ;
             }
 
-            
-            //MainGrid.SetValue( MyNewGrid.
-            for (int j = 0; j < numCols; j++)
+            //create laber for each cell in table
+            for (int j = 0; j < numCols; j++) 
             {
                 for (int i = 0; i < 18; ++i)
                 {
@@ -152,10 +151,14 @@ namespace WpfApplication2
                     System.Windows.Controls.Label x = resultTable.Children[idx] as System.Windows.Controls.Label;
                     x.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Center;
                     
+                    //check wheteher it is first row (names)
                     if (i == 0)
                     {
                         string imie = Inputbox.ShowInputDialog(ref input, "Podaj imię gracza nr" + (j + 1), 500, 70);
                         x.Content = imie;
+                        x.FontWeight = FontWeights.ExtraBold;
+                        x.Name = "Player" + (j+1);
+                        RegisterName(x.Name, x);
                     }
                     else
                     {
@@ -164,6 +167,7 @@ namespace WpfApplication2
                         RegisterName(x.Name, x);
                     }   
                     x.Height = 20;
+                    x.FontSize = 18;
                     x.Margin = new System.Windows.Thickness(5);
                     x.Padding = new System.Windows.Thickness(1);
                     x.SetValue(Grid.RowProperty, i);
@@ -180,17 +184,15 @@ namespace WpfApplication2
 
         private void btnFigury_Click(object sender, RoutedEventArgs e)
         {
+            //does not let the player to use result of the previous player
             if (ActivePlayer.DrawsLeft == 3)
             {
-                System.Windows.Forms.MessageBox.Show("Ehe ta, jasne. Najpierw przelosuj kości!");
+                System.Windows.Forms.MessageBox.Show("Najpierw przelosuj kości!");
                 return;
             }
             //System.Windows.Controls.Button Przycisk = (sender as System.Windows.Controls.Button);
             System.Windows.Controls.Button btn = (System.Windows.Controls.Button)sender;
-            string buttonNAME = btn.Name;
-            
-
-            btn.GetValue(Grid.RowProperty);
+                 
             int index = 7;
             //System.Windows.Forms.MessageBox.Show(Convert.ToString(btn.Parent.TransformToVisual(btn)));
             foreach (Object child in Figury.Children)
@@ -200,77 +202,94 @@ namespace WpfApplication2
 
             }
             System.Windows.Controls.Label labelind = (resultTable.RowDefinitions.ElementAt(index).FindName("P"+ActivePlayer.PersonId+"B"+index) as System.Windows.Controls.Label);
-            if ((string)labelind.Content != "") return;
+            //check whether clicked button was clicket for the first time, if yes do not do anything
+            if ((string)labelind.Content.ToString() != "") return;
+
             labelind.Content = liczpunkty.figury(imgKostka1.ToolTip.ToString()[0], imgKostka2.ToolTip.ToString()[0], imgKostka3.ToolTip.ToString()[0], imgKostka4.ToolTip.ToString()[0], imgKostka5.ToolTip.ToString()[0], btn);
+            //reset draws for next player
             ActivePlayer.DrawsLeft = 3;
-            //GeneralTransform generalTransform1 = TransformToVisual(btn);
-            //System.Windows.Forms.MessageBox.Show(Convert.ToString(labelind.Name));
-            //System.Windows.Controls.Label control = Test.RowDefinitions.;
+
             if (ActivePlayer.PersonId + 1 > ActivePlayer.NumberOfPlayers)
             {
+                System.Windows.Controls.Label playerNameLabel = (resultTable.FindName("Player" + ActivePlayer.PersonId) as System.Windows.Controls.Label);
+                playerNameLabel.Foreground = System.Windows.Media.Brushes.Black;
                 ActivePlayer.PersonId = 1;
+                playerNameLabel = (resultTable.FindName("Player" + ActivePlayer.PersonId) as System.Windows.Controls.Label);
+                playerNameLabel.Foreground = System.Windows.Media.Brushes.Green;
             }
             else
             {
+                System.Windows.Controls.Label playerNameLabel = (resultTable.FindName("Player" + ActivePlayer.PersonId) as System.Windows.Controls.Label);
+                playerNameLabel.Foreground = System.Windows.Media.Brushes.Black;
                 ActivePlayer.PersonId = ActivePlayer.PersonId + 1;
+                playerNameLabel = (resultTable.FindName("Player" + ActivePlayer.PersonId) as System.Windows.Controls.Label);
+                playerNameLabel.Foreground = System.Windows.Media.Brushes.Green;
             }
 
         }
         private void btnSzkola_Click(object sender, RoutedEventArgs e)
         {
+            //does not let the player to use result of the previous player
             if (ActivePlayer.DrawsLeft == 3)
             {
-                System.Windows.Forms.MessageBox.Show("Ehe ta, jasne. Najpierw przelosuj kości!");
+                System.Windows.Forms.MessageBox.Show("Najpierw przelosuj kości!");
                 return;
             }
-            //System.Windows.Controls.Button Przycisk = (sender as System.Windows.Controls.Button);
-            System.Windows.Controls.Button btn = (System.Windows.Controls.Button)sender;
-            string buttonNAME = btn.Name;
-            
 
-            btn.GetValue(Grid.RowProperty);
+            System.Windows.Controls.Button btn = (System.Windows.Controls.Button)sender;            
             int index = 0;
-            //System.Windows.Forms.MessageBox.Show(Convert.ToString(btn.Parent.TransformToVisual(btn)));
+ 
             foreach (Object child in Szkola.Children)
             {
                 index = index + 1;
                 if (child == sender) break;
 
             }
+
             System.Windows.Controls.Label labelind = (resultTable.RowDefinitions.ElementAt(index).FindName("P" + ActivePlayer.PersonId + "B" + index) as System.Windows.Controls.Label);
-            if (labelind.Content != "") return;
+            if ((string) labelind.Content.ToString() != "") return;
+
             labelind.Content = liczpunkty.szkola(imgKostka1.ToolTip.ToString(), imgKostka2.ToolTip.ToString(), imgKostka3.ToolTip.ToString(), imgKostka4.ToolTip.ToString(), imgKostka5.ToolTip.ToString(), btn);
             ActivePlayer.DrawsLeft = 3;
-            //GeneralTransform generalTransform1 = TransformToVisual(btn);
-            //System.Windows.Forms.MessageBox.Show(Convert.ToString(labelind.Name));
-            //System.Windows.Controls.Label control = Test.RowDefinitions.;
+
+           
+
             if (ActivePlayer.PersonId + 1 > ActivePlayer.NumberOfPlayers)
             {
+                System.Windows.Controls.Label playerNameLabel = (resultTable.FindName("Player" + ActivePlayer.PersonId) as System.Windows.Controls.Label);
+                playerNameLabel.Foreground = System.Windows.Media.Brushes.Black;
                 ActivePlayer.PersonId = 1;
+                playerNameLabel = (resultTable.FindName("Player" + ActivePlayer.PersonId) as System.Windows.Controls.Label);
+                playerNameLabel.Foreground = System.Windows.Media.Brushes.Green;
             }
             else
             {
+                System.Windows.Controls.Label playerNameLabel = (resultTable.FindName("Player" + ActivePlayer.PersonId) as System.Windows.Controls.Label);
+                playerNameLabel.Foreground = System.Windows.Media.Brushes.Black;
                 ActivePlayer.PersonId = ActivePlayer.PersonId + 1;
+                playerNameLabel = (resultTable.FindName("Player" + ActivePlayer.PersonId) as System.Windows.Controls.Label);
+                playerNameLabel.Foreground = System.Windows.Media.Brushes.Green;
             }
         }
-        public class Person
-        {
-            public int PersonId { get; set; }
-            public int DrawsLeft { get; set; }
-            public int NumberOfPlayers { get; set; }
-
-            public Person(int nPersonId, int nDraws,
-                int Number)
-            {
-                PersonId = nPersonId;
-                DrawsLeft = nDraws;
-                NumberOfPlayers = Number;
-            }
-        }
+        
     }
 
 
 }
+    public class Person
+    {
+        public int PersonId { get; set; }
+        public int DrawsLeft { get; set; }
+        public int NumberOfPlayers { get; set; }
+
+        public Person(int nPersonId, int nDraws,
+            int Number)
+        {
+            PersonId = nPersonId;
+            DrawsLeft = nDraws;
+            NumberOfPlayers = Number;
+        }
+    }
     public class Kostka
     {
         public static ImageSource Main()
@@ -350,103 +369,103 @@ namespace WpfApplication2
             return input;
         }
     }
-public class liczpunkty
-{
-    public static double szkola(string dice1, string dice2, string dice3, string dice4, string dice5, System.Windows.Controls.Button btnButton)
+    public class liczpunkty
     {
-        string sDices = dice1 + dice2 + dice3 + dice4 + dice5;
-        double nDicesCount = 0;
-        foreach (char c in sDices)
-                if (c == btnButton.Name[9]) nDicesCount++;
-
-        return (nDicesCount - 3) * char.GetNumericValue(btnButton.Name[9]);
-    }
-    public static double figury(char dice1, char dice2, char dice3, char dice4, char dice5, System.Windows.Controls.Button btnButton)
-    {
-        char[] arrDices = new char[] { dice1, dice2, dice3, dice4, dice5 };
-        double wynik = 0;
-        Array.Sort(arrDices);
-        Array.Reverse(arrDices);
-        //arrDices.OrderByDescending(x => x); //.ToList();
-        if (btnButton.Name == "btnPara")
+        public static double szkola(string dice1, string dice2, string dice3, string dice4, string dice5, System.Windows.Controls.Button btnButton)
         {
-            for (int i = 0; i < 4; i++)
+            string sDices = dice1 + dice2 + dice3 + dice4 + dice5;
+            double nDicesCount = 0;
+            foreach (char c in sDices)
+                    if (c == btnButton.Name[9]) nDicesCount++;
+
+            return (nDicesCount - 3) * char.GetNumericValue(btnButton.Name[9]);
+        }
+        public static double figury(char dice1, char dice2, char dice3, char dice4, char dice5, System.Windows.Controls.Button btnButton)
+        {
+            char[] arrDices = new char[] { dice1, dice2, dice3, dice4, dice5 };
+            double wynik = 0;
+            Array.Sort(arrDices);
+            Array.Reverse(arrDices);
+            //arrDices.OrderByDescending(x => x); //.ToList();
+            if (btnButton.Name == "btnPara")
             {
-                if (arrDices[i] == arrDices[i + 1])
+                for (int i = 0; i < 4; i++)
                 {
-                    wynik = 2*char.GetNumericValue(arrDices[i]);
-                    break;
+                    if (arrDices[i] == arrDices[i + 1])
+                    {
+                        wynik = 2*char.GetNumericValue(arrDices[i]);
+                        break;
+                    }
                 }
             }
-        }
       
-        if(btnButton.Name == "btnDwiePary")
-        {
-            for (int i = 0; i < 4; i++)
+            if(btnButton.Name == "btnDwiePary")
             {
-                if (arrDices[i] == arrDices[i + 1])
+                for (int i = 0; i < 4; i++)
                 {
-                    wynik = wynik +2 * char.GetNumericValue(arrDices[i]);
-                    i++;
+                    if (arrDices[i] == arrDices[i + 1])
+                    {
+                        wynik = wynik +2 * char.GetNumericValue(arrDices[i]);
+                        i++;
+                    }
                 }
             }
-        }
 
-        if (btnButton.Name == "btnTrojka")
-        {
-            for (int i = 0; i < 3; i++)
+            if (btnButton.Name == "btnTrojka")
             {
-                if (arrDices[i] == arrDices[i + 2])
+                for (int i = 0; i < 3; i++)
                 {
-                    wynik = 3 * char.GetNumericValue(arrDices[i]);
+                    if (arrDices[i] == arrDices[i + 2])
+                    {
+                        wynik = 3 * char.GetNumericValue(arrDices[i]);
                     
+                    }
                 }
             }
-        }
 
-        if (btnButton.Name == "btnMalyStrit")
-        {
-            if (arrDices[0] == '5' & arrDices[1] == '4' & arrDices[2] == '3' & arrDices[3] == '2' & arrDices[4] == '1') wynik = 15;
-        }
+            if (btnButton.Name == "btnMalyStrit")
+            {
+                if (arrDices[0] == '5' & arrDices[1] == '4' & arrDices[2] == '3' & arrDices[3] == '2' & arrDices[4] == '1') wynik = 15;
+            }
                            
-        if(btnButton.Name == "btnDuzyStrit")
-        {
-            if (arrDices[0] == '6' & arrDices[1] == '5' & arrDices[2] == '4' & arrDices[3] == '3' & arrDices[4] == '2') wynik = 20;
-        }
-                                  
-        if(btnButton.Name == "btnFull")
-        {
-            if (arrDices[1] == arrDices[0] & arrDices[3] == arrDices[4] & (arrDices[2] == arrDices[0] || arrDices[2] == arrDices[4])) wynik = 2 * char.GetNumericValue(arrDices[0]) + 2 * char.GetNumericValue(arrDices[4]) + char.GetNumericValue(arrDices[2])+30;
-        }
-                                         
-        if(btnButton.Name == "btnKareta")
-        {
-            for (int i = 0; i < 2; i++)
+            if(btnButton.Name == "btnDuzyStrit")
             {
-                if (arrDices[i] == arrDices[i + 3])
+                if (arrDices[0] == '6' & arrDices[1] == '5' & arrDices[2] == '4' & arrDices[3] == '3' & arrDices[4] == '2') wynik = 20;
+            }
+                                  
+            if(btnButton.Name == "btnFull")
+            {
+                if (arrDices[1] == arrDices[0] & arrDices[3] == arrDices[4] & (arrDices[2] == arrDices[0] || arrDices[2] == arrDices[4])) wynik = 2 * char.GetNumericValue(arrDices[0]) + 2 * char.GetNumericValue(arrDices[4]) + char.GetNumericValue(arrDices[2])+30;
+            }
+                                         
+            if(btnButton.Name == "btnKareta")
+            {
+                for (int i = 0; i < 2; i++)
                 {
-                    wynik = 4 * char.GetNumericValue(arrDices[i])+40;
+                    if (arrDices[i] == arrDices[i + 3])
+                    {
+                        wynik = 4 * char.GetNumericValue(arrDices[i])+40;
+                    }
                 }
             }
-        }
 
-        if (btnButton.Name == "btnGeneral")
-        { 
-            if (arrDices[0] == arrDices[4])
-            {
-                wynik = 5 * char.GetNumericValue(arrDices[0])+50;
+            if (btnButton.Name == "btnGeneral")
+            { 
+                if (arrDices[0] == arrDices[4])
+                {
+                    wynik = 5 * char.GetNumericValue(arrDices[0])+50;
+                }
             }
-        }
 
-        if (btnButton.Name == "btnSzansa")
-        {
-            for (int i = 0; i < 5; i++)
+            if (btnButton.Name == "btnSzansa")
             {
-                wynik = wynik + char.GetNumericValue(arrDices[i]);
+                for (int i = 0; i < 5; i++)
+                {
+                    wynik = wynik + char.GetNumericValue(arrDices[i]);
+                }
             }
+            return wynik;
         }
-        return wynik;
     }
-}
 
 
