@@ -156,13 +156,14 @@ namespace WpfApplication2
                     {
                         string imie = Inputbox.ShowInputDialog(ref input, "Podaj imię gracza nr" + (j + 1), 500, 70);
                         x.Content = imie;
-                        x.FontWeight = FontWeights.ExtraBold;
+                        x.FontWeight = FontWeights.UltraBold;
                         x.Name = "Player" + (j+1);
                         RegisterName(x.Name, x);
                     }
                     else
                     {
                         x.Content = string.Empty;
+                        x.FontWeight = FontWeights.Bold;
                         x.Name = "P" + (j+1) + "B" +i;
                         RegisterName(x.Name, x);
                     }   

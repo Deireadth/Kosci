@@ -4,8 +4,6 @@
              xmlns:local="clr-namespace:WpfApplication2"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-
-        <BitmapImage x:Key="Kostka1" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="D:\VisualStudio\WPF App\WpfApplication2\WpfApplication2\Kostka\1.jpg"/>
-
+        <ResourceDictionary Source="ButtonStyle.xaml"></ResourceDictionary>
     </Application.Resources>
 </Application>
