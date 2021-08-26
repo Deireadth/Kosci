@@ -122,7 +122,16 @@ namespace WpfApplication2
         {
             btnStart.Visibility = Visibility.Collapsed;
             string input = "";
-            Int32 numCols = Int32.Parse(Inputbox.ShowInputDialog(ref input, "Podaj liczbę graczy", 500,70));
+            input = Inputbox.ShowInputDialog(ref input, "Podaj liczbę graczy", 500, 70);
+            int tries = 0;
+            while (!input.All(char.IsDigit)) {
+                tries++;
+                input = Inputbox.ShowInputDialog(ref input, "Coś poszło nie tak. Podaj jeszcze raz liczbę graczy", 500, 70);
+            }
+            
+
+            int numCols = int.Parse(input);
+            
 
             //create column for each player
             for (int i = 0; i < numCols; ++i) 
@@ -142,7 +151,7 @@ namespace WpfApplication2
                 g.MinWidth = 120 ;
             }
 
-            //create laber for each cell in table
+            //create label for each cell in table
             for (int j = 0; j < numCols; j++) 
             {
                 for (int i = 0; i < 18; ++i)
@@ -283,8 +292,7 @@ namespace WpfApplication2
         public int DrawsLeft { get; set; }
         public int NumberOfPlayers { get; set; }
 
-        public Person(int nPersonId, int nDraws,
-            int Number)
+        public Person(int nPersonId, int nDraws, int Number)
         {
             PersonId = nPersonId;
             DrawsLeft = nDraws;
